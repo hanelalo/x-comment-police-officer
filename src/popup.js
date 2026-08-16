@@ -37,6 +37,26 @@ function renderStats(data) {
     const txt = document.createElement('div');
     txt.className = 'txt';
     txt.textContent = r.snippet;
+    // 内容被截断时可展开全文 + 悬停提示（便于判断是否误判）
+    if (r.full && r.full.length > (r.snippet || '').length) {
+      div.title = r.full;
+      div.classList.add('clickable');
+      txt.addEventListener('click', () => {
+        const expanded = div.classList.toggle('expanded');
+        const old = txt.querySelector('.full');
+        if (expanded) {
+          if (!old) {
+            const b = document.createElement('div');
+            b.className = 'full';
+            b.textContent = r.full;
+            const small = txt.querySelector('small');
+            txt.insertBefore(b, small || null);
+          }
+        } else if (old) {
+          old.remove();
+        }
+      });
+    }
     const reasons = (r.reasons || []).join('、');
     const small = document.createElement('small');
     small.textContent = `${r.handle ? '@' + r.handle + ' · ' : ''}${reasons || '未知原因'}`;

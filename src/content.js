@@ -182,6 +182,7 @@
   function hideArticle(article, res, handle) {
     state.hidden.set(article, {
       snippet: snippetOf(article),
+      full: extractText(article).replace(/\s+/g, ' ').trim(),  // 完整文本，弹窗可展开查看
       handle,
       reasons: res.reasons.slice(0, 6),
       score: res.score,
