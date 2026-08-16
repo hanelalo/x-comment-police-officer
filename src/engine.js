@@ -227,8 +227,6 @@
       if (url) {
         if (/(onlyfans|fansly|91porn|xvideos|pornhub|nhentai|jable|chaturbate|stripchat|telegram|t\.me)/i.test(url)) {
           bonus += (rules.adultUrlBonus || 20); reasons.push('主页外链为成人/引流域名');
-        } else if (/(bit\.ly|tinyurl|goo\.gl|cutt\.ly|suo\.im|dwz\.cn|t\.cn)\//i.test(url)) {
-          bonus += (rules.shortenerBonus || 10); reasons.push('主页外链为短链');
         }
       }
       let createdAt = 0;

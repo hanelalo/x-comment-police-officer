@@ -219,7 +219,6 @@
     { id: 'qq', re: /(?:qq|QQ|q\s?q|企鹅|扣扣)\s*[:：]?\s*\d{5,11}/, w: 25, label: 'QQ号' },
     { id: 'adultUrl', re: /(onlyfans|fansly|91porn|xvideos|pornhub|nhentai|e-hentai|jable|avgle|youporn|xnxx|xhamster|coomer|simpcity|f95zone|chaturbate|stripchat|cam4|hanime|javdb|avsox)/i, w: 40, label: '成人链接' },
     // 短链——bit.ly/tinyurl 是正规公司也在用的主流短链服务，单条不杀（8 弱信号），广告靠组合
-    { id: 'shortener', re: /(bit\.ly|tinyurl|goo\.gl|cutt\.ly|shorturl|url\.cn|suo\.im|dwz\.cn|t\.cn)\/\w+/i, w: 8, label: '短链' },
     { id: 'wallet', re: /(bc1q[a-z0-9]{25,38}|1[1-9A-HJ-NP-Za-km-z]{25,34}|0x[a-fA-F0-9]{40})/, w: 30, label: '钱包地址' },
     { id: 'url', re: /https?:\/\/\S+/, w: 3, label: '外链' },
     // 擦边自夸/比较句式（不枚举人称，靠句法模式）——权重低，需叠加其他信号才隐藏
@@ -284,7 +283,7 @@
   const PROFILE_RULES = {
     bioHitMinWeight: 25,   // bio 命中 >=25 权重的词 → +15
     adultUrlBonus: 20,     // 主页外链含成人域名 → +20
-    shortenerBonus: 10,    // 主页外链为短链 → +10
+    shortenerBonus: 0,
     newAccountDays: 45,    // 注册 <45 天 → +8
   };
 
