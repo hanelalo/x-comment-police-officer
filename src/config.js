@@ -134,12 +134,13 @@
     { t: '评论区置顶', w: 25, c: 'contact' },
     { t: '评论区见', w: 25, c: 'contact' },
     { t: '评论区找', w: 25, c: 'contact' },
-    { t: 'telegram', w: 25, c: 'contact' },
-    { t: 'Telegram', w: 25, c: 'contact' },
-    { t: '电报', w: 25, c: 'contact' },
-    { t: '纸飞机', w: 25, c: 'contact' },
-    { t: '飞机群', w: 25, c: 'contact' },
-    { t: 't.me', w: 25, c: 'contact' },
+    // TG 相关：频道链接/提及是正常内容分享（弱信号 5），个人联系方式（电报 @handle）由 tgContact 强杀
+    { t: 'telegram', w: 5, c: 'contact' },
+    { t: 'Telegram', w: 5, c: 'contact' },
+    { t: '电报', w: 5, c: 'contact' },
+    { t: '纸飞机', w: 5, c: 'contact' },
+    { t: '飞机群', w: 5, c: 'contact' },
+    { t: 't.me', w: 5, c: 'contact' },
     { t: 'onlyfans', w: 30, c: 'contact' },
     { t: 'OnlyFans', w: 30, c: 'contact' },
     { t: 'fansly', w: 30, c: 'contact' },
@@ -210,13 +211,14 @@
     // 性服务词 + 价格（只保留强性服务词，去掉「一次/小时/服务/夜」等中性词——
     // 「部署一次收2000」「一小时200」这类正常商务讨论不应命中）
     { id: 'price', re: /(招嫖|包夜|全套|半套|上门|出台|约炮)\S{0,8}\d{2,4}\s*(元|块|rmb|RMB|k|K)?/, w: 40, label: '价格信息' },
-    { id: 'tgContact', re: /(?:t\.me\/|telegram|电报|纸飞机|飞机群)[^\s]{0,2}[:：]?\s*@?[a-zA-Z0-9_]{3,}/i, w: 30, label: 'TG联系方式' },
+    // TG 个人联系方式（"加我电报 @abc""telegram：xxx"）；t.me/ 频道链接不算（那是内容分享）
+    { id: 'tgContact', re: /(?:telegram|电报|纸飞机|飞机群)[^\s]{0,2}[:：]?\s*@?[a-zA-Z0-9_]{3,}/i, w: 30, label: 'TG联系方式' },
     { id: 'wechatId', re: /(?:vx|wx|weixin|v信|薇信|威信|微信)\s*[:：]?\s*[a-zA-Z0-9_-]{4,20}/i, w: 25, label: '微信号' },
     { id: 'qq', re: /(?:qq|QQ|q\s?q|企鹅|扣扣)\s*[:：]?\s*\d{5,11}/, w: 25, label: 'QQ号' },
     { id: 'adultUrl', re: /(onlyfans|fansly|91porn|xvideos|pornhub|nhentai|e-hentai|jable|avgle|youporn|xnxx|xhamster|coomer|simpcity|f95zone|chaturbate|stripchat|cam4|hanime|javdb|avsox)/i, w: 40, label: '成人链接' },
     { id: 'shortener', re: /(bit\.ly|tinyurl|goo\.gl|cutt\.ly|shorturl|url\.cn|suo\.im|dwz\.cn|t\.cn)\/\w+/i, w: 20, label: '短链' },
     { id: 'wallet', re: /(bc1q[a-z0-9]{25,38}|1[1-9A-HJ-NP-Za-km-z]{25,34}|0x[a-fA-F0-9]{40})/, w: 30, label: '钱包地址' },
-    { id: 'url', re: /https?:\/\/\S+/, w: 8, label: '外链' },
+    { id: 'url', re: /https?:\/\/\S+/, w: 3, label: '外链' },
     // 擦边自夸/比较句式（不枚举人称，靠句法模式）——权重低，需叠加其他信号才隐藏
     // 比较式：「比她好看的没她骚」「没人比我骚」——countMulti：完整对照句两个比较结构计两分
     { id: 'lewdCmp', re: /(比我|比她|比他|比它|没我|没她|没他|没人|有谁|谁比).{0,4}?(骚|涩)/, w: 12, countMulti: true, label: '比较式擦边' },
