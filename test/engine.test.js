@@ -126,7 +126,7 @@ expectVisible('真假？？ Codex付费重置80美元/次？ 没看到有付费�
 expectVisible('酒店住一晚200块，性价比一般', '酒店一晚200');
 expectVisible('我把团队常用的 27 个 skill 公开了，一条命令装完，我把每一个都拆开写了一遍。微信搜「AI 小橙书」，免费，不用注册。', '微信搜公众号(内容营销)');
 expectVisible('Are you buying real AI - or just a new veneer? Look beyond the label: evaluate AI tools on architecture, security, and measurable ROI. Cloud & DevOps InfoQ Trends Report 2026 https://bit.ly/4fXWdAx', '正规公司短链(InfoQ报告)');
-expectHidden('白嫖看片加vx', '白嫖+引流(真广告)');
+expectHidden('白嫖看片加微信', '白嫖+引流(真广告)');
 expectVisible('一群人天天拿东北人下岗被迫卖淫说事儿。有没有想过，正是因为东北的工业文明发达，公民意识相对强烈，才能把黑历史记录下来。而河南四川贵州湖南等地全国卖的人，反而把下岗苦药含泪咽下去了呢？', '东北卖淫社会议题讨论');
 expectVisible('嫖娼是违法的，公众人物更该自律', '嫖娼违法讨论');
 expectVisible('新政策出台了，大家怎么看', '政策出台');
@@ -154,8 +154,8 @@ expectHidden('加我主页 置顶有联系方式', '主页置顶引流');
 expectHidden('有人想深入交流的吗 私信我', '深入交流+私信我');
 expectHidden('凌晨两点 一个人 空虚 有一起的吗', '深夜空虚约');
 expectVisible('感兴趣可以看看我简介', '简介引流(博主常规话术)');
-expectHidden('88一晚上 优惠到月底 加V', '价格+加V');
-expectHidden('想看我的可以私我', '想看我的+私我');
+expectHidden('88一晚上 优惠到月底 薇信我', '价格+薇信');
+expectHidden('想看我的可以加微信', '想看我的+加微信');
 
 // ========== 话题抑制 ==========
 console.log('\n--- 话题抑制（嫖娼新闻讨论不被误杀）---');
