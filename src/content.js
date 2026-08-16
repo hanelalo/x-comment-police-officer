@@ -87,6 +87,7 @@
       if (area === 'sync' && changes.config) {
         state.cfg = { ...DEFAULTS, ...changes.config.newValue };
         applyModeCss();
+        scheduleRescan();   // 配置变更后按新配置重新判定
       }
     });
   } catch (e) { /* 非扩展环境（测试） */ }
@@ -275,10 +276,12 @@
     if (!state.cfg.enabled) return;
 
     const isReply = !!state.mainStatus && article !== state.mainStatus;
+
+    // 范围控制：「仅评论区」模式下，首页信息流/搜索页/用户主页完全不处理
+    if (state.cfg.scope === 'comments' && !isReply) return;
+
     const thr = state.cfg.thresholds || DEFAULTS.thresholds;
-    const threshold = isReply
-      ? thr.reply
-      : (state.cfg.scope === 'comments' ? thr.feed : thr.feedEverywhere);
+    const threshold = isReply ? thr.reply : thr.feedEverywhere;
 
     // 重复刷屏：同文本出现 >=2 次（仅文本 >=6 字时计）
     let dupBonus = 0;
@@ -313,6 +316,35 @@
     for (const [el] of state.processedText) {
       if (!el.isConnected) state.processedText.delete(el);
     }
+  }
+
+  // ========== 配置变更后全量重扫 ==========
+  let rescanTimer = null;
+  function scheduleRescan() {
+    if (rescanTimer) clearTimeout(rescanTimer);
+    rescanTimer = setTimeout(() => {
+      rescanTimer = null;
+      try { rescanAll(); } catch (e) {
+        state.errors.push('rescan: ' + (e && e.message ? e.message : String(e)));
+      }
+    }, 300);
+  }
+
+  function rescanAll() {
+    // 恢复所有已隐藏（含 cell 容器），清空处理状态，按新配置重新判定
+    for (const el of document.querySelectorAll('.xcpo-hidden')) {
+      el.classList.remove('xcpo-hidden');
+      el.removeAttribute('aria-hidden');
+    }
+    state.hidden.clear();
+    state.hiddenCount = 0;
+    state.recent = [];
+    state.processedText.clear();
+    state.textCount.clear();
+    state.suppressTerms = null;
+    state.suppressPatterns = null;
+    state.mainStatus = null;
+    scan();
   }
 
   function scan() {
