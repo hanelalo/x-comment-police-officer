@@ -1,0 +1,13 @@
+{
+  "name": "x-comment-police-officer",
+  "version": "1.0.0",
+  "description": "X (Twitter) 评论区招嫖广告过滤插件",
+  "private": true,
+  "scripts": {
+    "test": "node test/engine.test.js",
+    "icons": "python3 scripts/gen_icons.py"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

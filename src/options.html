@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XCPO · 设置</title>
+  <style>
+    :root { --bg:#0f1419; --card:#161d26; --card2:#1b2430; --border:#2f3336; --txt:#e7e9ea; --muted:#8b98a5; --blue:#1d9bf0; --red:#dc2626; --green:#22c55e; --amber:#f59e0b; }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { background: var(--bg); color: var(--txt); font: 14px/1.6 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; padding: 24px; max-width: 860px; margin: 0 auto; }
+    h1 { font-size: 20px; margin-bottom: 4px; }
+    .sub { color: var(--muted); margin-bottom: 20px; font-size: 13px; }
+    section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    section h2 { font-size: 14px; margin-bottom: 12px; display:flex; align-items:center; gap:8px; }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .row:last-child { border-bottom: none; }
+    .row label { flex: 1; }
+    .row label b { font-size: 13px; }
+    .row label small { display: block; color: var(--muted); font-size: 12px; }
+    input[type="range"] { width: 200px; accent-color: var(--blue); }
+    select { background: var(--card2); color: var(--txt); border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px; }
+    .switch { position: relative; width: 38px; height: 20px; flex: none; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; inset: 0; background: #3a444c; border-radius: 20px; cursor: pointer; transition:.2s; }
+    .slider::before { content:""; position:absolute; width:14px; height:14px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; }
+    input:checked + .slider { background: var(--blue); }
+    input:checked + .slider::before { transform: translateX(18px); }
+    .cats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cat { background: var(--card2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+    .cat h3 { font-size: 13px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center; }
+    .cat h3 .w { font-size: 11px; color: var(--amber); }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; max-height: 170px; overflow-y: auto; }
+    .chip { display: inline-flex; align-items: center; gap: 5px; background: #243042; border-radius: 14px; padding: 3px 8px 3px 10px; font-size: 12px; }
+    .chip button { border: none; background: transparent; color: var(--muted); cursor: pointer; font-size: 13px; line-height: 1; }
+    .chip button:hover { color: var(--red); }
+    .add-row { display: flex; gap: 6px; margin-top: 10px; }
+    .add-row input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--txt); padding: 6px 8px; font-size: 12px; }
+    textarea { width: 100%; min-height: 64px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--txt); padding: 8px; font-size: 12px; font-family: inherit; }
+    button.btn { background: var(--blue); color: #fff; border: none; border-radius: 8px; padding: 7px 14px; cursor: pointer; font-size: 13px; }
+    button.btn.ghost { background: var(--card2); color: var(--txt); border: 1px solid var(--border); }
+    button.btn.danger { background: var(--red); }
+    .test-box textarea { min-height: 70px; }
+    .test-result { margin-top: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px; font-size: 12px; white-space: pre-wrap; word-break: break-all; }
+    .test-result .ok { color: var(--red); font-weight: 700; }
+    .test-result .pass { color: var(--green); font-weight: 700; }
+    .tips { color: var(--muted); font-size: 12px; margin-top: 8px; }
+    code { background: var(--card2); padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #222; border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; opacity: 0; transition: .3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+    .scope-desc { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <h1>🛡 X 评论城管 · 设置</h1>
+  <div class="sub">隐藏 X 评论区招嫖广告与钓鱼评论。所有检测都在本地完成，不上传任何数据。</div>
+
+  <section>
+    <h2>⚙ 基础</h2>
+    <div class="row">
+      <label><b>启用过滤</b><small>关闭后插件完全静默</small></label>
+      <label class="switch"><input type="checkbox" id="enabled" /><span class="slider"></span></label>
+    </div>
+    <div class="row">
+      <label><b>处理方式</b><small>彻底隐藏：不留任何痕迹；审查模式：半透明显示，方便你检查误杀</small></label>
+      <select id="mode">
+        <option value="hide">彻底隐藏</option>
+        <option value="dim">审查模式（半透明）</option>
+      </select>
+    </div>
+    <div class="row">
+      <label><b>过滤范围</b><small>评论区：只在推文评论区生效；全站：信息流里的广告推文也过滤</small></label>
+      <select id="scope">
+        <option value="comments">仅评论区</option>
+        <option value="everywhere">全站</option>
+      </select>
+    </div>
+  </section>
+
+  <section>
+    <h2>🎚 灵敏度</h2>
+    <div class="row">
+      <label><b>评论区阈值：<span id="thrReplyV">14</span></b><small>分数 ≥ 阈值即隐藏。分数 = 所有信号权重之和（建议 10~18）</small></label>
+      <input type="range" id="thrReply" min="6" max="30" step="1" />
+    </div>
+    <div class="row">
+      <label><b>信息流阈值：<span id="thrFeedV">25</span></b><small>信息流推文要求更高分（建议 18~30）</small></label>
+      <input type="range" id="thrFeed" min="10" max="40" step="1" />
+    </div>
+    <div class="row">
+      <label><b>emoji 干扰检测</b><small>识别"我太涩了🌤️🍝有人想锐评"这类句中插 emoji 绕过过滤的手法</small></label>
+      <label class="switch"><input type="checkbox" id="useEmojiNoise" /><span class="slider"></span></label>
+    </div>
+    <div class="row">
+      <label><b>主页深查</b><small>边界分值评论的作者，读取其主页简介作为补充信号（保守限速，失败自动跳过）</small></label>
+      <label class="switch"><input type="checkbox" id="useProfileCheck" /><span class="slider"></span></label>
+    </div>
+  </section>
+
+  <section>
+    <h2>👤 账号名单</h2>
+    <div class="row" style="align-items: flex-start;">
+      <label><b>白名单</b><small>这些账号的评论永不过滤，每行一个 @handle（不含 @）</small></label>
+    </div>
+    <textarea id="whitelist" placeholder="musk&#10;bob123"></textarea>
+    <div class="row" style="align-items: flex-start; margin-top: 12px;">
+      <label><b>黑名单</b><small>这些账号的评论直接隐藏，每行一个 @handle（不含 @）</small></label>
+    </div>
+    <textarea id="blacklist" placeholder="spam_girl_520"></textarea>
+  </section>
+
+  <section>
+    <h2>📝 关键词管理 <span class="tips" style="margin-left:auto">权重越大越容易命中（100=必杀）</span></h2>
+    <div class="cats" id="cats"></div>
+  </section>
+
+  <section class="test-box">
+    <h2>🧪 在线试词</h2>
+    <textarea id="testText" placeholder="粘贴一条评论测试是否会命中过滤……"></textarea>
+    <div style="display:flex; gap:8px; margin-top:10px; align-items:center; flex-wrap:wrap;">
+      <button class="btn" id="testBtn">测试</button>
+      <button class="btn ghost" id="testExamples">填入示例广告</button>
+      <button class="btn ghost" id="testLegit">填入正常评论</button>
+      <span class="tips">阈值按"评论区"判断：≥<span id="testThr">14</span> 分会被隐藏</span>
+    </div>
+    <div class="test-result" id="testResult" style="display:none"></div>
+  </section>
+
+  <section>
+    <h2>💾 配置</h2>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn ghost" id="exportBtn">导出配置 JSON</button>
+      <button class="btn ghost" id="importBtn">导入配置</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" />
+      <button class="btn danger" id="resetBtn">恢复默认</button>
+    </div>
+    <div class="tips">设置保存在 Chrome 同步存储，换设备登录同一账号会自动同步。</div>
+  </section>
+
+  <div class="toast" id="toast"></div>
+  <script src="config.js"></script>
+  <script src="engine.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
