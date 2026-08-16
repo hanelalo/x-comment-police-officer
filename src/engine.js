@@ -50,15 +50,9 @@
     return String(h || '').trim().replace(/^@/, '').toLowerCase();
   }
 
-  /** 英文为主的内容（插件面向中文评论区）：中文占比 <20% 且英文字母 ≥5 → 跳过文本打分。
-   *  onlyfans/telegram 等明确引流词不受语言检测影响（见 scoreText 调用处） */
-  function isMostlyEnglish(s) {
-    const letters = String(s || '').replace(/[^a-zA-Z\u4e00-\u9fa5]/g, '');
-    if (!letters) return false;
-    const en = (letters.match(/[a-zA-Z]/g) || []).length;
-    if (en < 5) return false;
-    const cn = letters.length - en;
-    return cn / letters.length < 0.2;
+  /** 用户决策：只对包含中文的内容过滤——纯英文（长短推）一律不参与判定 */
+  function containsChinese(s) {
+    return /[\u3400-\u9FFF\uF900-\uFAFF]/.test(String(s || ''));
   }
 
   /** 把用户自定义关键词并入默认表，去重 */
@@ -152,9 +146,8 @@
         return { score, hits, reasons: buildReasons(hits) };
       }
 
-      // 英文为主的内容不参与文本打分（插件针对中文）；账号信号已计入，保留
-      // 豁免：onlyfans/fansly/成人域名/telegram/加密货币 等明确引流词——纯英文广告仍要杀
-      if (isMostlyEnglish(raw) && !/(onlyfans|fansly|porn|91porn|xvideos|xhamster|xnxx|chaturbate|stripchat|javdb|telegram|bitcoin|usdt|wallet|airdrop)/i.test(raw)) {
+      // 只对包含中文的内容过滤（用户决策）：纯英文长推/短推一律不参与文本打分；账号信号已计入，保留
+      if (!containsChinese(raw)) {
         const score = hits.reduce((s, h) => s + h.w, 0);
         return { score, hits, reasons: buildReasons(hits) };
       }
