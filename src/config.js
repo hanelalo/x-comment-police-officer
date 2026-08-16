@@ -32,7 +32,7 @@
     { t: '援交', w: 25, c: 'explicit' },
     { t: '出台', w: 12, c: 'explicit' },
     { t: '包夜', w: 100, c: 'explicit' },
-    { t: '包养', w: 12, c: 'explicit' },
+    { t: '包养', w: 6, c: 'explicit' },
     { t: '一夜情', w: 25, c: 'explicit' },
     { t: '約炮', w: 25, c: 'explicit' },
     { t: '约炮', w: 25, c: 'explicit' },
