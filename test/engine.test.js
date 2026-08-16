@@ -117,6 +117,12 @@ expectVisible('这玩意能部署到实体老板电脑上，部署一次收2000�
 expectVisible('这家快餐15元一份，挺好吃', '快餐价格');
 expectVisible('微信支付很方便', '微信支付语境');
 expectVisible('我微信你一下发地址', '微信聊天语境');
+expectVisible('哪里有白嫖教程', '白嫖教程');
+expectVisible('这个会员可以白嫖', '白嫖会员');
+expectVisible('白嫖党表示很爽', '白嫖党');
+expectVisible('白嫖看完整个教程再评论', '白嫖看');
+expectVisible('200一晚 上门维修不包配件', '上门维修语境');
+expectHidden('白嫖看片加vx', '白嫖+引流(真广告)');
 expectVisible('这里太无聊了，大家都散了', '无聊吐槽');
 expectVisible('睡不着，有没有人推荐电影', '正常求推荐');
 expectVisible('哈哈哈哈笑死我了', '纯搞笑');
