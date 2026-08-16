@@ -84,7 +84,16 @@
       const hits = [];
       for (const p of patterns) {
         p.re.lastIndex = 0;
-        if (p.re.test(text)) hits.push({ id: p.id, w: p.w, label: p.label });
+        if (p.re.test(text)) {
+          if (p.countMulti) {
+            // 句式类规则：多次命中多次计分（如完整对照句的两个比较结构）
+            const re = new RegExp(p.re.source, p.re.flags.includes('g') ? p.re.flags : p.re.flags + 'g');
+            const n = Math.min((text.match(re) || []).length, 3);
+            for (let i = 0; i < n; i++) hits.push({ id: p.id, w: p.w, label: p.label });
+          } else {
+            hits.push({ id: p.id, w: p.w, label: p.label });
+          }
+        }
       }
       return hits;
     }
